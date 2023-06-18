@@ -1,6 +1,6 @@
-package com.company.kotlinapp_apis.api.login.controller;
+package com.company.kotlinapp_apis.api.login_register.controller;
 
-import com.company.kotlinapp_apis.api.login.model.LoginRequest;
+import com.company.kotlinapp_apis.api.login_register.model.LoginRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
