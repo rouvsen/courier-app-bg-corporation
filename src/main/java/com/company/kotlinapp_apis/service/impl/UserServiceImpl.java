@@ -1,41 +1,38 @@
 package com.company.kotlinapp_apis.service.impl;
 
-import com.company.kotlinapp_apis.bean.UserMapper;
 import com.company.kotlinapp_apis.dao.UserRepository;
 import com.company.kotlinapp_apis.dto.UserDto.UserDto;
+import com.company.kotlinapp_apis.model.Role;
 import com.company.kotlinapp_apis.model.User;
 import com.company.kotlinapp_apis.service.inter.UserServiceInter;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service //You can use Mapper here
+@Service
 public class UserServiceImpl implements UserServiceInter {
 
     private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
-    private final UserMapper userMapper;
-
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public UserDto createUser(UserDto userDto) {
-        User userEntity = userMapper.toEntity(userDto);
-
-        String savedEmail = userRepository.findById(userEntity.getId()).get()
-                .getEmail();
-
-        if(!savedEmail.isBlank()){
-            throw new UnsupportedOperationException("this email already taken..");
+    public ResponseEntity<UserDto> createUser(UserDto userDto) {
+        User userEntity = modelMapper.map(userDto, User.class);
+        if(isEmailTaken(userEntity.getEmail())) {
+            return ResponseEntity.badRequest().build();
         }
-
-        return userMapper.toDto(userRepository.save(userEntity));
+        userEntity.setRole(Role.USER);
+        User savedUser = userRepository.save(userEntity);
+        return ResponseEntity.ok(modelMapper.map(savedUser, UserDto.class));
     }
 
     @Override
@@ -45,7 +42,7 @@ public class UserServiceImpl implements UserServiceInter {
         List<User> listEntity = userRepository.findAll();
 
         for (User entity : listEntity) {
-            UserDto dto = userMapper.toDto(entity);
+            UserDto dto = modelMapper.map(entity, UserDto.class);
             listDto.add(dto);
         }
 
@@ -56,7 +53,12 @@ public class UserServiceImpl implements UserServiceInter {
     public UserDto getUserById(Long id) {
         User entity = userRepository.findById(id).orElseThrow(() ->
                 new UnsupportedOperationException("id is not exist.."));
-        return userMapper.toDto(entity);
+        return modelMapper.map(entity, UserDto.class);
+    }
+
+    @Override
+    public Boolean isEmailTaken(String email) {
+        return userRepository.findUserByEmail(email).isPresent();
     }
 
     @Override
@@ -69,17 +71,28 @@ public class UserServiceImpl implements UserServiceInter {
         return null;
     }
 
+//    public static UserDto toDto(User user) {
+//        return UserDto.builder()
+//                .id(user.getId())
+//                .firstName(user.getFirstName())
+//                .lastName(user.getLastName())
+//                .email(user.getEmail())
+//                .oneSignal(user.getOneSignal())
+//                .password(user.getPassword())
+//                .role(Role.USER)
+//                .build();
+//    }
 
-//
-
-//
-//    public UserDto createUser(UserDto userDto) {
-//        User user = userMapper.toEntity(userDto);
-//        user.setRole(Role.USER);
-//        //logic here
-//
-//
-//        return userMapper.toDto(user);
+//    public static User toEntity(UserDto userDto) {
+//        return User.builder()
+//                .id(userDto.getId())
+//                .firstName(userDto.getFirstName())
+//                .lastName(userDto.getLastName())
+//                .email(userDto.getEmail())
+//                .oneSignal(userDto.getOneSignal())
+//                .password(userDto.getPassword())
+//                .role(Role.USER)
+//                .build();
 //    }
 
 }
