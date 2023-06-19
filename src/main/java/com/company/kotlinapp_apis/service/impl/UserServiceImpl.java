@@ -6,7 +6,6 @@ import com.company.kotlinapp_apis.model.Role;
 import com.company.kotlinapp_apis.model.User;
 import com.company.kotlinapp_apis.service.inter.UserServiceInter;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
