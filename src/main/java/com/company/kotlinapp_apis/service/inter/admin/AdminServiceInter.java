@@ -13,5 +13,6 @@ public interface AdminServiceInter {
     AdminDto updateAdmin(Long id, AdminDto adminDto);
     Boolean deleteAdmin(Long id);
     Boolean isAdminEmailTaken(String email);
+    AdminDto findAdminByEmail(String email);
 
 }

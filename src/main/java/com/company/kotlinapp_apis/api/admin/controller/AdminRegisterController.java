@@ -9,23 +9,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/admins")
-public class RegisterController {
+public class AdminRegisterController {
 
     private final AdminServiceImpl adminServiceImpl;
 
-    public RegisterController(AdminServiceImpl adminServiceImpl) {
+    public AdminRegisterController(AdminServiceImpl adminServiceImpl) {
         this.adminServiceImpl = adminServiceImpl;
     }
 
-
     //CREATE
-    @PostMapping("/admins")
+    @PostMapping
     public ResponseEntity<AdminDto> createAdmin(@RequestBody AdminDto adminDto){
         return adminServiceImpl.createAdmin(adminDto);
     }
 
     //LIST
-    @GetMapping("/admins")
+    @GetMapping
     public List<AdminDto> getAllAdmins(){
         return adminServiceImpl.getAllAdmins();
     }
