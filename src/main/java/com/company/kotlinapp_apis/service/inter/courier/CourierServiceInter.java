@@ -13,5 +13,5 @@ public interface CourierServiceInter {
     CourierDto updateCourier(Long id, CourierDto courierDto);
     Boolean deleteCourier(Long id);
     Boolean isCourierEmailTaken(String email);
-
+    CourierDto findCourierByEmail(String email);
 }
