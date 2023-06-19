@@ -1,7 +1,9 @@
 package com.company.kotlinapp_apis.service.impl.courier;
 
 import com.company.kotlinapp_apis.dao.courier.CourierRepository;
+import com.company.kotlinapp_apis.dto.admin.AdminDto;
 import com.company.kotlinapp_apis.dto.courier.CourierDto;
+import com.company.kotlinapp_apis.model.admin.Admin;
 import com.company.kotlinapp_apis.model.courier.Courier;
 import com.company.kotlinapp_apis.service.inter.courier.CourierServiceInter;
 import org.modelmapper.ModelMapper;
@@ -55,7 +57,17 @@ public class CourierServiceImpl implements CourierServiceInter {
 
     @Override
     public Boolean isCourierEmailTaken(String email) {
-        return courierRepository.findCourierByEmail(email).isPresent();
+        return courierRepository.findCourierByEmail(email) != null;
+    }
+
+    @Override
+    public CourierDto findCourierByEmail(String email) {
+        Courier courier = courierRepository.findCourierByEmail(email);
+        System.out.println(courier);
+        if(courier != null) {
+            return modelMapper.map(courier, CourierDto.class);
+        }
+        return null;
     }
 
     @Override
