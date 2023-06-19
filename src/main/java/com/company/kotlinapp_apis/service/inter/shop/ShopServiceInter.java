@@ -13,5 +13,5 @@ public interface ShopServiceInter {
     ShopDto updateShop(Long id, ShopDto shopDto);
     Boolean deleteShop(Long id);
     Boolean isShopEmailTaken(String email);
-
+    ShopDto findShopByEmail(String email);
 }

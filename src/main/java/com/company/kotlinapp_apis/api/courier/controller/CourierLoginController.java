@@ -27,8 +27,6 @@ public class CourierLoginController {
 
         CourierDto courierDto = courierService.findCourierByEmail(email);
 
-        System.out.println(courierDto);
-
         if (courierDto == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid username or password");

@@ -1,7 +1,9 @@
 package com.company.kotlinapp_apis.service.impl.shop;
 
 import com.company.kotlinapp_apis.dao.shop.ShopRepository;
+import com.company.kotlinapp_apis.dto.courier.CourierDto;
 import com.company.kotlinapp_apis.dto.shop.ShopDto;
+import com.company.kotlinapp_apis.model.courier.Courier;
 import com.company.kotlinapp_apis.model.shop.Shop;
 import com.company.kotlinapp_apis.service.inter.shop.ShopServiceInter;
 import org.modelmapper.ModelMapper;
@@ -55,7 +57,16 @@ public class ShopServiceImpl implements ShopServiceInter {
 
     @Override
     public Boolean isShopEmailTaken(String email) {
-        return shopRepository.findShopByEmail(email).isPresent();
+        return shopRepository.findShopByEmail(email) != null;
+    }
+
+    @Override
+    public ShopDto findShopByEmail(String email) {
+        Shop shop = shopRepository.findShopByEmail(email);
+        if(shop != null) {
+            return modelMapper.map(shop, ShopDto.class);
+        }
+        return null;
     }
 
     @Override

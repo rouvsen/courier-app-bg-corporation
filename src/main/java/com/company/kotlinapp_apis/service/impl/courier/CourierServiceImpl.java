@@ -63,7 +63,6 @@ public class CourierServiceImpl implements CourierServiceInter {
     @Override
     public CourierDto findCourierByEmail(String email) {
         Courier courier = courierRepository.findCourierByEmail(email);
-        System.out.println(courier);
         if(courier != null) {
             return modelMapper.map(courier, CourierDto.class);
         }
