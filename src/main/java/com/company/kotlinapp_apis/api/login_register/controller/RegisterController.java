@@ -23,13 +23,13 @@ public class RegisterController {
     }
 
     //CREATE
-    @PostMapping("/employees")
+    @PostMapping("/users")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
         return userServiceImpl.createUser(userDto);
     }
 
     //LIST
-    @GetMapping("/employees")
+    @GetMapping("/users")
     public List<UserDto> getAllUsers(){
         return userServiceImpl.getAllUsers();
     }
