@@ -31,7 +31,10 @@ public class AdminLoginController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
 
-        return ResponseEntity.ok(adminDto);
+        if(adminDto.getPassword().equals(loginRequest.getPassword())) {
+            return ResponseEntity.ok(adminDto);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
     }
 
 }
