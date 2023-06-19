@@ -22,16 +22,16 @@ public class AdminLoginController {
 
     @PostMapping
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        String username = loginRequest.getUsername();
+        String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
-        AdminDto adminDto = adminService.findAdminByEmail(username);
+        AdminDto adminDto = adminService.findAdminByEmail(email);
 
         if (adminDto == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
 
-        if(adminDto.getPassword().equals(loginRequest.getPassword())) {
+        if(adminDto.getPassword().equals(password)) {
             return ResponseEntity.ok(adminDto);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
