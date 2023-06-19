@@ -55,7 +55,11 @@ public class AdminServiceImpl implements AdminServiceInter {
 
     @Override
     public AdminDto findAdminByEmail(String email) {
-        return modelMapper.map(adminRepository.findAdminByEmail(email), AdminDto.class);
+        Admin admin = adminRepository.findAdminByEmail(email);
+        if(admin != null) {
+            return modelMapper.map(admin, AdminDto.class);
+        }
+        return null;
     }
 
     @Override
