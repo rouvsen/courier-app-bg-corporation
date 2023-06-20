@@ -5,16 +5,14 @@ import com.company.kotlinapp_apis.model.courier.Courier;
 import com.company.kotlinapp_apis.model.finance.Finance;
 import com.company.kotlinapp_apis.model.shop.Shop;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
+@ToString
 @Table(name = "orders")
 public class Order {
 
