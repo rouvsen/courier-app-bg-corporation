@@ -50,9 +50,11 @@ public class ShopServiceImpl implements ShopServiceInter {
 
     @Override
     public ShopDto getShopById(Long id) {
-        Shop entity = shopRepository.findById(id).orElseThrow(() ->
-                new UnsupportedOperationException("admin id is not exist.."));
-        return modelMapper.map(entity, ShopDto.class);
+        Shop entity = shopRepository.findById(id).orElseGet(() -> null);
+        if (entity != null) {
+            return modelMapper.map(entity, ShopDto.class);
+        }
+        return null;
     }
 
     @Override
