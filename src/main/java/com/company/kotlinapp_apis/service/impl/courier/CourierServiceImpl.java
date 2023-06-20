@@ -50,9 +50,11 @@ public class CourierServiceImpl implements CourierServiceInter {
 
     @Override
     public CourierDto getCourierById(Long id) {
-        Courier entity = courierRepository.findById(id).orElseThrow(() ->
-                new UnsupportedOperationException("courier id is not exist.."));
-        return modelMapper.map(entity, CourierDto.class);
+        Courier entity = courierRepository.findById(id).orElseGet(() -> null);
+        if(entity != null) {
+            return modelMapper.map(entity, CourierDto.class);
+        }
+        return null;
     }
 
     @Override
