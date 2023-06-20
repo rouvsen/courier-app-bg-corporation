@@ -4,10 +4,7 @@ import com.company.kotlinapp_apis.dao.admin.AdminRepository;
 import com.company.kotlinapp_apis.dao.courier.CourierRepository;
 import com.company.kotlinapp_apis.dao.order.OrderRepository;
 import com.company.kotlinapp_apis.dao.shop.ShopRepository;
-import com.company.kotlinapp_apis.model.admin.Admin;
-import com.company.kotlinapp_apis.model.courier.Courier;
 import com.company.kotlinapp_apis.model.order.Order;
-import com.company.kotlinapp_apis.model.shop.Shop;
 import com.company.kotlinapp_apis.service.inter.order.OrderServiceInter;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +44,10 @@ public class OrderService implements OrderServiceInter {
     @Override
     public Order getOrderById(Long orderId) {
         return orderRepository.findById(orderId).orElseGet(() -> null);
+    }
+
+    @Override
+    public Order updateOrder(Order updatedOrder) {
+        return orderRepository.save(updatedOrder);
     }
 }
