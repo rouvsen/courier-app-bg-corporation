@@ -29,9 +29,6 @@ public class Shop {
 
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "shop")
-    private List<Order> orders;
-
     private String oneSignal;//deviceId
 
     @Column(unique = true, nullable = false)
