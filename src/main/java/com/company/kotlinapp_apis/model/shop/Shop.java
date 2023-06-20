@@ -1,10 +1,13 @@
 package com.company.kotlinapp_apis.model.shop;
 
+import com.company.kotlinapp_apis.model.order.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Table
 @Entity
@@ -25,6 +28,9 @@ public class Shop {
     private String location;
 
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "shop")
+    private List<Order> orders;
 
     private String oneSignal;//deviceId
 
