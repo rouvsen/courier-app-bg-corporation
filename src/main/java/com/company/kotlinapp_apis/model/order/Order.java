@@ -1,9 +1,5 @@
 package com.company.kotlinapp_apis.model.order;
 
-import com.company.kotlinapp_apis.model.admin.Admin;
-import com.company.kotlinapp_apis.model.courier.Courier;
-import com.company.kotlinapp_apis.model.finance.Finance;
-import com.company.kotlinapp_apis.model.shop.Shop;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +15,9 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Version
+    private Long version; // Optimistic locking
 
     private String status;
 
