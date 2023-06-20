@@ -1,6 +1,7 @@
 package com.company.kotlinapp_apis.model.courier;
 
 import com.company.kotlinapp_apis.model.order.Order;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,9 +29,6 @@ public class Courier {
     private String phoneNumber;
 
     private String location;
-
-    @OneToMany(mappedBy = "courier")
-    private List<Order> orders;
 
     private String familyPhoneNumber;
 
