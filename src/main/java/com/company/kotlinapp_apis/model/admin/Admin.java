@@ -1,6 +1,5 @@
 package com.company.kotlinapp_apis.model.admin;
 
-import com.company.kotlinapp_apis.model.order.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,9 +25,6 @@ public class Admin {
     private String lastName;
 
     private String phoneNumber;
-
-    @OneToMany(mappedBy = "admin")
-    private List<Order> orders;
 
     private String oneSignal;//deviceId
 
