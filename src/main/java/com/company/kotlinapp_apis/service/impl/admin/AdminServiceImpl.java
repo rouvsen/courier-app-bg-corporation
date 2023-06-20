@@ -48,9 +48,11 @@ public class AdminServiceImpl implements AdminServiceInter {
 
     @Override
     public AdminDto getAdminById(Long id) {
-        Admin entity = adminRepository.findById(id).orElseThrow(() ->
-                new UnsupportedOperationException("admin id is not exist.."));
-        return modelMapper.map(entity, AdminDto.class);
+        Admin entity = adminRepository.findById(id).orElseGet(() -> null);
+        if(entity != null) {
+            return modelMapper.map(entity, AdminDto.class);
+        }
+        return null;
     }
 
     @Override
