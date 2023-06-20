@@ -22,8 +22,17 @@ public class Order {
 
     private String status;
 
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-    private Finance finance;
+    @Column(name = "finance_id")
+    private Long financeId;
+
+    @Column(name = "admin_id")
+    private Long adminId;
+
+    @Column(name = "courier_id")
+    private Long courierId;
+
+    @Column(name = "shop_id")
+    private Long shopId;
 
     private String customerContact;
 
@@ -70,17 +79,5 @@ public class Order {
     private Boolean orderTrash;
 
     private String orderTrashDate;
-
-    @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private Admin admin;
-
-    @ManyToOne
-    @JoinColumn(name = "courier_id")
-    private Courier courier;
-
-    @ManyToOne
-    @JoinColumn(name = "shop_id")
-    private Shop shop;
 
 }
