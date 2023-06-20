@@ -19,10 +19,6 @@ public class Finance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
-
     private Integer price;
     private String date;
     private String time;
