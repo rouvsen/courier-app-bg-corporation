@@ -1,6 +1,5 @@
 package com.company.kotlinapp_apis.api.shop.controller;
 
-import com.company.kotlinapp_apis.dto.courier.CourierDto;
 import com.company.kotlinapp_apis.dto.shop.ShopDto;
 import com.company.kotlinapp_apis.service.impl.shop.ShopServiceImpl;
 import org.springframework.http.HttpStatus;
