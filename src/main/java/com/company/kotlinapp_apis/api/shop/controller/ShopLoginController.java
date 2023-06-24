@@ -32,7 +32,12 @@ public class ShopLoginController {
         }
 
         if(shopDto.getPassword().equals(password)) {
-            return ResponseEntity.ok(shopDto);
+            if(!shopDto.isDisable() && !shopDto.getShopTrash()) {
+                return ResponseEntity.ok(shopDto);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body("This user is inactive or deleted.");
+            }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
     }
