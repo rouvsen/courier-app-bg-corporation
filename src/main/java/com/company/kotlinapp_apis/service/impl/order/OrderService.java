@@ -1,53 +1,62 @@
 package com.company.kotlinapp_apis.service.impl.order;
 
-import com.company.kotlinapp_apis.dao.admin.AdminRepository;
-import com.company.kotlinapp_apis.dao.courier.CourierRepository;
 import com.company.kotlinapp_apis.dao.order.OrderRepository;
-import com.company.kotlinapp_apis.dao.shop.ShopRepository;
+import com.company.kotlinapp_apis.dto.order.OrderDto;
 import com.company.kotlinapp_apis.model.order.Order;
-import com.company.kotlinapp_apis.service.inter.order.OrderServiceInter;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class OrderService implements OrderServiceInter {
+public class OrderService { //implements OrderServiceInter
 
     private final OrderRepository orderRepository;
+    private final ModelMapper modelMapper;
 
-    private final AdminRepository adminRepository;
-    private final CourierRepository courierRepository;
-    private final ShopRepository shopRepository;
-
-    public OrderService(OrderRepository orderRepository, AdminRepository adminRepository, CourierRepository courierRepository, ShopRepository shopRepository) {
+    public OrderService(OrderRepository orderRepository, ModelMapper modelMapper) {
         this.orderRepository = orderRepository;
-        this.adminRepository = adminRepository;
-        this.courierRepository = courierRepository;
-        this.shopRepository = shopRepository;
+        this.modelMapper = modelMapper;
     }
 
-    @Override
-    public Order saveOrder(Order order) {
-        return orderRepository.save(order);
+    public OrderDto createOrder(OrderDto orderDto) {
+        Order order = modelMapper.map(orderDto, Order.class);
+        order = orderRepository.save(order);
+        return modelMapper.map(order, OrderDto.class);
     }
 
-    @Override
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public List<OrderDto> getAllOrders() {
+        List<Order> orders = orderRepository.findAll();
+        return orders.stream()
+                .map(order -> modelMapper.map(order, OrderDto.class))
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public void removeById(Long orderId) {
-        orderRepository.deleteById(orderId);
+    public OrderDto findOrderById(Long orderId) {
+        Optional<Order> orderOptional = orderRepository.findById(orderId);
+        return orderOptional.map(order -> modelMapper.map(order, OrderDto.class)).orElse(null);
     }
 
-    @Override
-    public Order getOrderById(Long orderId) {
-        return orderRepository.findById(orderId).orElseGet(() -> null);
+    public OrderDto updateOrder(Long orderId, OrderDto orderDto) {
+        Optional<Order> orderOptional = orderRepository.findById(orderId);
+        if (orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+            modelMapper.map(orderDto, order);
+            order = orderRepository.save(order);
+            return modelMapper.map(order, OrderDto.class);
+        }
+        return null;
     }
 
-    @Override
-    public Order updateOrder(Order updatedOrder) {
-        return orderRepository.save(updatedOrder);
+    public boolean deleteOrder(Long orderId) {
+        Optional<Order> orderOptional = orderRepository.findById(orderId);
+        if (orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+            orderRepository.delete(order);
+            return true;
+        }
+        return false;
     }
 }

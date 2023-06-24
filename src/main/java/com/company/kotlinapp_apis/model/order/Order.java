@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Data
-@ToString
 @Table(name = "orders")
 public class Order {
 
@@ -72,8 +71,6 @@ public class Order {
     private String description;
 
     private Boolean selectableItem;
-
-    private Boolean paidOrder;
 
     private Boolean orderTrash;
 

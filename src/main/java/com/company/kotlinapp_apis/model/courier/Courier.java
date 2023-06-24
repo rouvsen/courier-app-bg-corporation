@@ -22,6 +22,9 @@ public class Courier {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "is_disable")
+    private boolean isDisable;
+
     private String firstName;
 
     private String lastName;

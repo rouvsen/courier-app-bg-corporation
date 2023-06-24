@@ -41,4 +41,22 @@ public class ShopRegisterController {
                 .body("shop doesn't exist with given id..");
     }
 
+    //UPDATE
+    @PutMapping("/{shopId}")
+    public ResponseEntity<?> updateShop(
+            @PathVariable("shopId") Long id,
+            @RequestBody ShopDto shopDto
+    ) {
+        ShopDto updatedShop = shopServiceImpl.updateShop(id, shopDto);
+        return ResponseEntity.ok(updatedShop);
+    }
+
+
+    //DELETE
+    @DeleteMapping("/{shopId}")
+    public ResponseEntity<?> deleteShopById(@PathVariable("shopId") Long shopId) {
+        shopServiceImpl.deleteShopById(shopId);
+        return ResponseEntity.ok().build();
+    }
+
 }

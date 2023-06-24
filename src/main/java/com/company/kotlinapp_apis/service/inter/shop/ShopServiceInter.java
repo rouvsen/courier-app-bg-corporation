@@ -11,7 +11,7 @@ public interface ShopServiceInter {
     ShopDto getShopById(Long id);
     ResponseEntity<ShopDto> createShop(ShopDto shopDto);
     ShopDto updateShop(Long id, ShopDto shopDto);
-    Boolean deleteShop(Long id);
+    void deleteShopById(Long id);
     Boolean isShopEmailTaken(String email);
     ShopDto findShopByEmail(String email);
 }

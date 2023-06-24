@@ -1,6 +1,5 @@
 package com.company.kotlinapp_apis.api.courier.controller;
 
-import com.company.kotlinapp_apis.dto.admin.AdminDto;
 import com.company.kotlinapp_apis.dto.courier.CourierDto;
 import com.company.kotlinapp_apis.service.impl.courier.CourierServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,7 @@ public class CourierRegisterController {
 
     //CREATE
     @PostMapping
-    public ResponseEntity<CourierDto> createCourier(@RequestBody CourierDto courierDto){
+    public ResponseEntity<?> createCourier(@RequestBody CourierDto courierDto){
         return courierServiceImpl.createCourier(courierDto);
     }
 
@@ -40,6 +39,22 @@ public class CourierRegisterController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("courier doesn't exist with given id..");
+    }
+
+    //UPDATE
+    @PutMapping("/{courierId}")
+    public ResponseEntity<?> updateCourier(
+            @PathVariable("courierId") Long id,
+            @RequestBody CourierDto courierDTO) {
+        CourierDto updatedCourier = courierServiceImpl.updateCourier(id, courierDTO);
+        return ResponseEntity.ok(updatedCourier);
+    }
+
+    //DELETE
+    @DeleteMapping("/{courierId}")
+    public ResponseEntity<?> deleteCourierById(@PathVariable("courierId") Long courierId) {
+        courierServiceImpl.deleteCourier(courierId);
+        return ResponseEntity.ok().build();
     }
 
 }

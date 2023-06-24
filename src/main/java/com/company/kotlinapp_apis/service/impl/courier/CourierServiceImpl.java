@@ -1,9 +1,7 @@
 package com.company.kotlinapp_apis.service.impl.courier;
 
 import com.company.kotlinapp_apis.dao.courier.CourierRepository;
-import com.company.kotlinapp_apis.dto.admin.AdminDto;
 import com.company.kotlinapp_apis.dto.courier.CourierDto;
-import com.company.kotlinapp_apis.model.admin.Admin;
 import com.company.kotlinapp_apis.model.courier.Courier;
 import com.company.kotlinapp_apis.service.inter.courier.CourierServiceInter;
 import org.modelmapper.ModelMapper;
@@ -30,6 +28,7 @@ public class CourierServiceImpl implements CourierServiceInter {
         if(isCourierEmailTaken(courierEntity.getEmail())) {
             return ResponseEntity.badRequest().build();
         }
+        courierEntity.setDisable(true);
         Courier savedCourier = courierRepository.save(courierEntity);
         return ResponseEntity.ok(modelMapper.map(savedCourier, CourierDto.class));
     }
@@ -72,12 +71,16 @@ public class CourierServiceImpl implements CourierServiceInter {
     }
 
     @Override
-    public CourierDto updateCourier(Long id, CourierDto adminDto) {
-        return null;
+    public CourierDto updateCourier(Long id, CourierDto courierDto) {
+        Courier existingCourier = courierRepository.findById(id).orElseThrow(() ->
+                new UnsupportedOperationException("Courier not found with id:" + id));
+        modelMapper.map(courierDto, existingCourier);
+        Courier updatedCourier = courierRepository.save(existingCourier);
+        return modelMapper.map(updatedCourier, CourierDto.class);
     }
 
     @Override
-    public Boolean deleteCourier(Long id) {
-        return null;
+    public void deleteCourier(Long id) {
+        courierRepository.deleteById(id);
     }
 }

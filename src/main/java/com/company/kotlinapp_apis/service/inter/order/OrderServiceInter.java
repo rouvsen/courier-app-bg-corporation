@@ -1,15 +1,14 @@
 package com.company.kotlinapp_apis.service.inter.order;
 
+import com.company.kotlinapp_apis.dto.order.OrderDto;
 import com.company.kotlinapp_apis.model.order.Order;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface OrderServiceInter {
-    Order saveOrder(Order order);
-    List<Order> getAllOrders();
+    OrderDto saveOrder(OrderDto order);
+    List<OrderDto> getAllOrders();
     void removeById(Long orderId);
     Order getOrderById(Long orderId);
-
-    Order updateOrder(Order updatedOrder);
+    OrderDto updateOrder(Order orderDto);
 }

@@ -1,9 +1,7 @@
 package com.company.kotlinapp_apis.service.impl.shop;
 
 import com.company.kotlinapp_apis.dao.shop.ShopRepository;
-import com.company.kotlinapp_apis.dto.courier.CourierDto;
 import com.company.kotlinapp_apis.dto.shop.ShopDto;
-import com.company.kotlinapp_apis.model.courier.Courier;
 import com.company.kotlinapp_apis.model.shop.Shop;
 import com.company.kotlinapp_apis.service.inter.shop.ShopServiceInter;
 import org.modelmapper.ModelMapper;
@@ -30,6 +28,7 @@ public class ShopServiceImpl implements ShopServiceInter {
         if(isShopEmailTaken(shopEntity.getEmail())) {
             return ResponseEntity.badRequest().build();
         }
+        shopEntity.setDisable(true);
         Shop savedShop = shopRepository.save(shopEntity);
         return ResponseEntity.ok(modelMapper.map(savedShop, ShopDto.class));
     }
@@ -73,11 +72,15 @@ public class ShopServiceImpl implements ShopServiceInter {
 
     @Override
     public ShopDto updateShop(Long id, ShopDto shopDto) {
-        return null;
+        Shop existingShop = shopRepository.findById(id).orElseThrow(() ->
+                new UnsupportedOperationException("Shop not found with id:" + id));
+        modelMapper.map(shopDto, existingShop);
+        Shop updatedShop = shopRepository.save(existingShop);
+        return modelMapper.map(updatedShop, ShopDto.class);
     }
 
     @Override
-    public Boolean deleteShop(Long id) {
-        return null;
+    public void deleteShopById(Long id) {
+        shopRepository.deleteById(id);
     }
 }

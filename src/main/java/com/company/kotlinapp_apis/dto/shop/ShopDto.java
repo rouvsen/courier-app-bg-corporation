@@ -1,5 +1,6 @@
 package com.company.kotlinapp_apis.dto.shop;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,9 @@ import lombok.NoArgsConstructor;
 public class ShopDto {
 
     private Long id;
+
+    @JsonProperty("isDisable")
+    private boolean isDisable;
 
     private String firstName;
 

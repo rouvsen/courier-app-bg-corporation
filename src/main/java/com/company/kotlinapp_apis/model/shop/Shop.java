@@ -1,13 +1,11 @@
 package com.company.kotlinapp_apis.model.shop;
 
-import com.company.kotlinapp_apis.model.order.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @Table
 @Entity
@@ -20,6 +18,9 @@ public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "is_disable")
+    private boolean isDisable;
 
     private String firstName;
 

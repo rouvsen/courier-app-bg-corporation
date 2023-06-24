@@ -11,7 +11,7 @@ public interface CourierServiceInter {
     CourierDto getCourierById(Long id);
     ResponseEntity<CourierDto> createCourier(CourierDto courierDto);
     CourierDto updateCourier(Long id, CourierDto courierDto);
-    Boolean deleteCourier(Long id);
+    void deleteCourier(Long id);
     Boolean isCourierEmailTaken(String email);
     CourierDto findCourierByEmail(String email);
 }
