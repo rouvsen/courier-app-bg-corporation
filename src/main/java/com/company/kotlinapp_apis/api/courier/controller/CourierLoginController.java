@@ -33,7 +33,12 @@ public class CourierLoginController {
         }
 
         if(courierDto.getPassword().equals(password)) {
-            return ResponseEntity.ok(courierDto);
+            if(!courierDto.isDisable() && !courierDto.getCourierTrash()) {
+                return ResponseEntity.ok(courierDto);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body("This user is inactive or deleted.");
+            }
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
