@@ -40,7 +40,7 @@ public class Shop {
 
     private String createdDate;
 
-    private Boolean trash;
+    private boolean shopTrash;
 
     private String trashDate;
 }
