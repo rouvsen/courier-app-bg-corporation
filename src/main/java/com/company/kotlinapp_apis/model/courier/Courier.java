@@ -45,7 +45,7 @@ public class Courier {
 
     private String createdDate;
 
-    private Boolean trash;
+    private boolean courierTrash;
 
     private String trashDate;
 }
