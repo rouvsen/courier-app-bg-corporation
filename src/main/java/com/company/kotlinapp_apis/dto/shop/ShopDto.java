@@ -33,7 +33,7 @@ public class ShopDto {
 
     private String createdDate;
 
-    private Boolean trash;
+    private Boolean shopTrash;
 
     private String trashDate;
 
