@@ -2,6 +2,8 @@ package com.company.kotlinapp_apis.api.order.controller;
 
 import com.company.kotlinapp_apis.dto.order.OrderDto;
 import com.company.kotlinapp_apis.service.impl.order.OrderService;
+import jakarta.persistence.OptimisticLockException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,14 +41,23 @@ public class OrderController {
     }
 
     @PutMapping("/{orderId}")
-    public ResponseEntity<OrderDto> updateOrder(
+    public ResponseEntity<?> updateOrder(
             @PathVariable Long orderId,
             @RequestBody OrderDto orderDto) {
-        OrderDto updatedOrder = orderService.updateOrder(orderId, orderDto);
-        if (updatedOrder != null) {
-            return ResponseEntity.ok(updatedOrder);
+
+        try {
+            OrderDto updatedOrder = orderService.updateOrder(orderId, orderDto);
+            if (updatedOrder != null) {
+                return ResponseEntity.ok(updatedOrder);
+            }
+            return ResponseEntity.notFound().build();
+        } catch (OptimisticLockException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Order has been modified by another user. Please try again.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return ResponseEntity.notFound().build();
+
     }
 
     @DeleteMapping("/{orderId}")
