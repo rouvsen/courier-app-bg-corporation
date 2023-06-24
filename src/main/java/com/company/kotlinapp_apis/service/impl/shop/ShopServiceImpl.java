@@ -28,7 +28,8 @@ public class ShopServiceImpl implements ShopServiceInter {
         if(isShopEmailTaken(shopEntity.getEmail())) {
             return ResponseEntity.badRequest().build();
         }
-        shopEntity.setDisable(true);
+        shopEntity.setDisable(false);
+        shopEntity.setTrash(false);
         Shop savedShop = shopRepository.save(shopEntity);
         return ResponseEntity.ok(modelMapper.map(savedShop, ShopDto.class));
     }

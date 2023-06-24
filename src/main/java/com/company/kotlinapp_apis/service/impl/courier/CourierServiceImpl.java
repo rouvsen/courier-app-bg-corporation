@@ -28,7 +28,8 @@ public class CourierServiceImpl implements CourierServiceInter {
         if(isCourierEmailTaken(courierEntity.getEmail())) {
             return ResponseEntity.badRequest().build();
         }
-        courierEntity.setDisable(true);
+        courierEntity.setDisable(false);
+        courierEntity.setTrash(false);
         Courier savedCourier = courierRepository.save(courierEntity);
         return ResponseEntity.ok(modelMapper.map(savedCourier, CourierDto.class));
     }
