@@ -26,6 +26,10 @@ public class Admin {
 
     private String phoneNumber;
 
+    private Integer currentBalance;
+
+    private Integer yourDeptBalance;
+
     private String oneSignal;//deviceId
 
     @Column(unique = true, nullable = false)
