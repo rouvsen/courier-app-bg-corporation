@@ -15,8 +15,6 @@ public class OrderDto {
 
     private String status;
 
-    private Long financeId;
-
     private Long adminId;
 
     private Long courierId;
@@ -24,6 +22,8 @@ public class OrderDto {
     private Long shopId;
 
     private String customerContact;
+
+    private String returnLocation;
 
     private String toLocation;
 
