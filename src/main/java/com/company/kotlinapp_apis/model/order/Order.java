@@ -20,9 +20,6 @@ public class Order {
 
     private String status;
 
-    @Column(name = "finance_id")
-    private Long financeId;
-
     @Column(name = "admin_id")
     private Long adminId;
 
@@ -31,6 +28,8 @@ public class Order {
 
     @Column(name = "shop_id")
     private Long shopId;
+
+    private String returnLocation;
 
     private String customerContact;
 
