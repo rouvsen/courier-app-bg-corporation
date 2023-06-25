@@ -19,6 +19,10 @@ public class AdminDto {
 
     private String phoneNumber;
 
+    private Integer currentBalance;
+
+    private Integer yourDeptBalance;
+
     private String oneSignal;//deviceId
 
     private String email;
