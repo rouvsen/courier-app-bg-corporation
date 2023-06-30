@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminServiceImpl implements AdminServiceInter {
@@ -71,11 +72,24 @@ public class AdminServiceImpl implements AdminServiceInter {
 
     @Override
     public AdminDto updateAdmin(Long id, AdminDto adminDto) {
+        Optional<Admin> adminOptional = adminRepository.findById(id);
+        if (adminOptional.isPresent()) {
+            Admin admin = adminOptional.get();
+            modelMapper.map(adminDto, admin);
+            admin = adminRepository.save(admin);
+            return modelMapper.map(admin, AdminDto.class);
+        }
         return null;
     }
 
     @Override
     public Boolean deleteAdmin(Long id) {
-        return null;
+        Optional<Admin> adminOptional = adminRepository.findById(id);
+        if (adminOptional.isPresent()) {
+            Admin admin = adminOptional.get();
+            adminRepository.delete(admin);
+            return true;
+        }
+        return false;
     }
 }
