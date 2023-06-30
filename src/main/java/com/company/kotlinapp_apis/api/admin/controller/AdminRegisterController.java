@@ -1,6 +1,7 @@
 package com.company.kotlinapp_apis.api.admin.controller;
 
 import com.company.kotlinapp_apis.dto.admin.AdminDto;
+import com.company.kotlinapp_apis.dto.courier.CourierDto;
 import com.company.kotlinapp_apis.service.impl.admin.AdminServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,28 @@ public class AdminRegisterController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("admin doesn't exist with given id..");
+    }
+
+    //UPDATE
+    @PutMapping("/{adminId}")
+    public ResponseEntity<?> updateAdmin(
+            @PathVariable("adminId") Long id,
+            @RequestBody AdminDto adminDto) {
+        AdminDto updatedAdmin = adminServiceImpl.updateAdmin(id, adminDto);
+        if (updatedAdmin != null) {
+            return ResponseEntity.ok(updatedAdmin);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    //DELETE
+    @DeleteMapping("/{adminId}")
+    public ResponseEntity<?> deleteAdminById(@PathVariable("adminId") Long adminId) {
+        boolean deleted = adminServiceImpl.deleteAdmin(adminId);
+        if (deleted) {
+            return ResponseEntity.ok("Admin deleted successfully");
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }
