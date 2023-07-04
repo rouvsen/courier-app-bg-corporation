@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CourierServiceImpl implements CourierServiceInter {
@@ -28,7 +29,7 @@ public class CourierServiceImpl implements CourierServiceInter {
         if(isCourierEmailTaken(courierEntity.getEmail())) {
             return ResponseEntity.badRequest().build();
         }
-        courierEntity.setDisable(false);
+        courierEntity.setIsDisable(false);
         courierEntity.setTrash(false);
         Courier savedCourier = courierRepository.save(courierEntity);
         return ResponseEntity.ok(modelMapper.map(savedCourier, CourierDto.class));
@@ -73,11 +74,54 @@ public class CourierServiceImpl implements CourierServiceInter {
 
     @Override
     public CourierDto updateCourier(Long id, CourierDto courierDto) {
-        Courier existingCourier = courierRepository.findById(id).orElseThrow(() ->
-                new UnsupportedOperationException("Courier not found with id:" + id));
-        modelMapper.map(courierDto, existingCourier);
-        Courier updatedCourier = courierRepository.save(existingCourier);
-        return modelMapper.map(updatedCourier, CourierDto.class);
+        Optional<Courier> courierOptional = courierRepository.findById(id);
+        if (courierOptional.isPresent()) {
+            Courier courier = courierOptional.get();
+
+            if (courierDto.getIsDisable() != null) {
+                courier.setIsDisable(courierDto.getIsDisable());
+            }
+            if (courierDto.getFirstName() != null) {
+                courier.setFirstName(courierDto.getFirstName());
+            }
+            if (courierDto.getLastName() != null) {
+                courier.setLastName(courierDto.getLastName());
+            }
+            if (courierDto.getPhoneNumber() != null) {
+                courier.setPhoneNumber(courierDto.getPhoneNumber());
+            }
+            if (courierDto.getCurrentBalance() != null) {
+                courier.setCurrentBalance(courierDto.getCurrentBalance());
+            }
+            if (courierDto.getLocation() != null) {
+                courier.setLocation(courierDto.getLocation());
+            }
+            if (courierDto.getFamilyPhoneNumber() != null) {
+                courier.setFamilyPhoneNumber(courierDto.getFamilyPhoneNumber());
+            }
+            if (courierDto.getOneSignal() != null) {
+                courier.setOneSignal(courierDto.getOneSignal());
+            }
+            if (courierDto.getEmail() != null) {
+                courier.setEmail(courierDto.getEmail());
+            }
+            if (courierDto.getPassword() != null) {
+                courier.setPassword(courierDto.getPassword());
+            }
+            if (courierDto.getCreatedDate() != null) {
+                courier.setCreatedDate(courierDto.getCreatedDate());
+            }
+            if (courierDto.getTrash() != null) {
+                courier.setTrash(courierDto.getTrash());
+            }
+            if (courierDto.getTrashDate() != null) {
+                courier.setTrashDate(courierDto.getTrashDate());
+            }
+
+            courier = courierRepository.save(courier);
+            return modelMapper.map(courier, CourierDto.class);
+        }
+        return null;
     }
 
     @Override

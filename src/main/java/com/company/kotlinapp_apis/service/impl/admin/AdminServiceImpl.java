@@ -75,7 +75,30 @@ public class AdminServiceImpl implements AdminServiceInter {
         Optional<Admin> adminOptional = adminRepository.findById(id);
         if (adminOptional.isPresent()) {
             Admin admin = adminOptional.get();
-            modelMapper.map(adminDto, admin);
+            if (adminDto.getFirstName() != null) {
+                admin.setFirstName(adminDto.getFirstName());
+            }
+            if (adminDto.getLastName() != null) {
+                admin.setLastName(adminDto.getLastName());
+            }
+            if (adminDto.getPhoneNumber() != null) {
+                admin.setPhoneNumber(adminDto.getPhoneNumber());
+            }
+            if (adminDto.getCurrentBalance() != null) {
+                admin.setCurrentBalance(adminDto.getCurrentBalance());
+            }
+            if (adminDto.getYourDeptBalance() != null) {
+                admin.setYourDeptBalance(adminDto.getYourDeptBalance());
+            }
+            if (adminDto.getOneSignal() != null) {
+                admin.setOneSignal(adminDto.getOneSignal());
+            }
+            if (adminDto.getEmail() != null) {
+                admin.setEmail(adminDto.getEmail());
+            }
+            if (adminDto.getPassword() != null) {
+                admin.setPassword(adminDto.getPassword());
+            }
             admin = adminRepository.save(admin);
             return modelMapper.map(admin, AdminDto.class);
         }

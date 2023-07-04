@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShopServiceImpl implements ShopServiceInter {
@@ -28,7 +29,7 @@ public class ShopServiceImpl implements ShopServiceInter {
         if(isShopEmailTaken(shopEntity.getEmail())) {
             return ResponseEntity.badRequest().build();
         }
-        shopEntity.setDisable(false);
+        shopEntity.setIsDisable(false);
         shopEntity.setTrash(false);
         Shop savedShop = shopRepository.save(shopEntity);
         return ResponseEntity.ok(modelMapper.map(savedShop, ShopDto.class));
@@ -73,12 +74,50 @@ public class ShopServiceImpl implements ShopServiceInter {
 
     @Override
     public ShopDto updateShop(Long id, ShopDto shopDto) {
-        Shop existingShop = shopRepository.findById(id).orElseThrow(() ->
-                new UnsupportedOperationException("Shop not found with id:" + id));
-        modelMapper.map(shopDto, existingShop);
-        Shop updatedShop = shopRepository.save(existingShop);
-        return modelMapper.map(updatedShop, ShopDto.class);
+        Optional<Shop> shopOptional = shopRepository.findById(id);
+        if (shopOptional.isPresent()) {
+            Shop shop = shopOptional.get();
+
+            if (shopDto.getIsDisable() != null) {
+                shop.setIsDisable(shopDto.getIsDisable());
+            }
+            if (shopDto.getFirstName() != null) {
+                shop.setFirstName(shopDto.getFirstName());
+            }
+            if (shopDto.getLatLong() != null) {
+                shop.setLatLong(shopDto.getLatLong());
+            }
+            if (shopDto.getLocation() != null) {
+                shop.setLocation(shopDto.getLocation());
+            }
+            if (shopDto.getPhoneNumber() != null) {
+                shop.setPhoneNumber(shopDto.getPhoneNumber());
+            }
+            if (shopDto.getOneSignal() != null) {
+                shop.setOneSignal(shopDto.getOneSignal());
+            }
+            if (shopDto.getEmail() != null) {
+                shop.setEmail(shopDto.getEmail());
+            }
+            if (shopDto.getPassword() != null) {
+                shop.setPassword(shopDto.getPassword());
+            }
+            if (shopDto.getCreatedDate() != null) {
+                shop.setCreatedDate(shopDto.getCreatedDate());
+            }
+            if (shopDto.getTrash() != null) {
+                shop.setTrash(shopDto.getTrash());
+            }
+            if (shopDto.getTrashDate() != null) {
+                shop.setTrashDate(shopDto.getTrashDate());
+            }
+
+            shop = shopRepository.save(shop);
+            return modelMapper.map(shop, ShopDto.class);
+        }
+        return null;
     }
+
 
     @Override
     public void deleteShopById(Long id) {

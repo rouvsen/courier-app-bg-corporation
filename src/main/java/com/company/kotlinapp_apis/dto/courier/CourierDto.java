@@ -15,7 +15,7 @@ public class CourierDto {
     private Long id;
 
     @JsonProperty("isDisable")
-    private boolean isDisable;
+    private Boolean isDisable;
 
     private String firstName;
 

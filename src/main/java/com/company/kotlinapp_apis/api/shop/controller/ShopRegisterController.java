@@ -1,5 +1,6 @@
 package com.company.kotlinapp_apis.api.shop.controller;
 
+import com.company.kotlinapp_apis.dto.admin.AdminDto;
 import com.company.kotlinapp_apis.dto.shop.ShopDto;
 import com.company.kotlinapp_apis.service.impl.shop.ShopServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -48,7 +49,10 @@ public class ShopRegisterController {
             @RequestBody ShopDto shopDto
     ) {
         ShopDto updatedShop = shopServiceImpl.updateShop(id, shopDto);
-        return ResponseEntity.ok(updatedShop);
+        if (updatedShop != null) {
+            return ResponseEntity.ok(updatedShop);
+        }
+        return ResponseEntity.notFound().build();
     }
 
 

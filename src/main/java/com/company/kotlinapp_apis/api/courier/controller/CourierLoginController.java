@@ -33,7 +33,7 @@ public class CourierLoginController {
         }
 
         if(courierDto.getPassword().equals(password)) {
-            if(!courierDto.isDisable() && !courierDto.getTrash()) {
+            if(!courierDto.getIsDisable() && !courierDto.getTrash()) {
                 return ResponseEntity.ok(courierDto);
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

@@ -32,7 +32,7 @@ public class ShopLoginController {
         }
 
         if(shopDto.getPassword().equals(password)) {
-            if(!shopDto.isDisable() && !shopDto.getTrash()) {
+            if(!shopDto.getIsDisable() && !shopDto.getTrash()) {
                 return ResponseEntity.ok(shopDto);
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

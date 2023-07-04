@@ -20,7 +20,7 @@ public class Shop {
     private Long id;
 
     @Column(name = "is_disable")
-    private boolean isDisable;
+    private Boolean isDisable;
 
     private String firstName;
 
